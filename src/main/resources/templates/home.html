@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        body {background-color: #ffcc66;}
+        body {font-family: "Arial", Arial, sans-serif;}
+        li {font-size: 20px;}
+        li {font-style: italic;}
+        p {font-size: 12px;}
+    </style>
+</head>
+<body>
+{{^name}}
+Welcome!! Login below to add a messages, reminders, and whathaveyou's!<br>
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter Username" name="userName"/>
+    <button type="submit">Login</button>
+</form>
+{{/name}}
+
+{{#name}}
+
+<b>{{.}}.... Congratulations!!!</b><br>You can now add any sort of message, reminder, or whathaveyou!
+
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br><br>
+
+<b>Wanna add something?</b>
+
+<form action="/add-message" method="post">
+    Enter
+    <input type="text" placeholder="Your Text Here..." name="text"/><br>
+    <button type="submit">Add Your Something</button>
+</form>
+<br><br>
+<b>Wanna make a change?</b>
+<form action="/amend-message" method="post">
+    Enter the message
+    <input type="number" placeholder="ID #..." name="id" style="width: 40px"/>
+    <---HERE, and make your
+    <input type="text" placeholder="Edits..." name="text"/>
+    <--- HERE<br>
+    <button type="submit">Make Your Change</button>
+</form>
+
+<ol>
+    {{#messages}}
+    <li>{{text}}<br>
+        <p>(Message ID: {{id}})</p>
+        <form action="/delete-message" method="post">
+            <input type="hidden" value="{{id}}" name="id"/>
+            <button type="submit">X</button>
+        </form>
+    </li>
+    {{/messages}}
+</ol>
+
+{{/name}}
+</body>
+</html>
